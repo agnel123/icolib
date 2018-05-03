@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]> <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]> <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Devicon</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.1/normalize.min.css" charset="utf-8">
+  <link rel="stylesheet" href="devicon.min.css" charset="utf-8">
+  <link rel="stylesheet" type="text/css" href="css/default.css" />
+  <link rel="stylesheet" type="text/css" href="css/component.css" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <style media="screen">
+    body {
+      margin: 5rem;
+      text-align: center;
+      background: rgb(245, 245, 245);
+    }
+    .borders {
+      position: fixed;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      border: 8px solid #60be86;
+      z-index: -1;
+    }
+    .icon-version {
+      margin: 4rem 0;
+    }
+    i {
+      display: inline-block;
+      margin: 2rem;
+      font-size: 5rem;
+    }
+    img {
+      max-width: 5rem;
+    }
+    h4 {
+      margin: 0;
+      color: #60be86;
+    }
+    .navbar {
+      margin-bottom: 0;
+      border-radius: 0;
+    }
+    
+    /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
+    .row.content {height: 450px}
+    
+    /* Set gray background color and 100% height */
+    .sidenav {
+      padding-top: 20px;
+      background-color: #f1f1f1;
+      height: 100%;
+    }
+    
+    /* Set black background color, white text and some padding */
+    footer {
+      background-color: #555;
+      color: white;
+      padding: 15px;
+    }
+    
+    /* On small screens, set height to 'auto' for sidenav and grid */
+    @media screen and (max-width: 767px) {
+      .sidenav {
+        height: auto;
+        padding: 15px;
+      }
+      .row.content {height:auto;} 
+    }
+    ul {
+        list-style-position: inside;
+        padding-left: 0;
+        }
+  </style>
+
+</head>
+
+<body ng-app="app" ng-controller="IconsCtrl">
+
+
+
+        <nav class="navbar navbar-inverse">
+                <div class="container-fluid">
+                  <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                      <span class="icon-bar"></span>
+                      <span class="icon-bar"></span>
+                      <span class="icon-bar"></span>                        
+                    </button>
+                    <a class="navbar-brand" href="#">Logo</a>
+                  </div>
+                  <div class="collapse navbar-collapse" id="myNavbar">
+                    <ul class="nav navbar-nav">
+                      <li class="active"><a href="#">Home</a></li>
+                      <li><a href="#">About</a></li>
+                      <li><a href="#">Projects</a></li>
+                      <li><a href="#">Contact</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                      <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                    </ul>
+                  </div>
+                </div>
+              </nav>
+                
+              <div class="container-fluid text-center">    
+                <div class="row content">
+                        <div class="col-sm-2 sidenav">
+                            <p><a href="#">All</a></p>
+                            <ul class="list-inline">
+                                    <li ng-repeat="icon in categories | filter:search">
+                                            <p><a ng-class="{'selected': icon.selected}" ng-click="selectCategory(icon)">{{icon.name}}</a></p>
+                                    </li>
+                            </ul>
+                        </div>
+                        <div class="col-sm-8 text-left"> 
+                                <ul class="list-inline">
+                                    <li class="list-inline-item" ng-repeat="icon in icons.children | filter:search">
+                                                <ul class="list-inline-item" ng-repeat="category in icon.children | filter:search">
+                                                        <ul class="list-inline" ng-if="category.name.indexOf('original') !== -1">      
+                                                                <li>
+                                                                    <img src="/{{selectedCategory.name}}/{{icon.name}}/{{category.name}}" height="42" width="42" ng-class="{'selected': icon.selected}" ng-click="selectIcon(icon,selectedCategory)"/>        
+                                                                </li>
+                                                        </ul>        
+
+                                                        <ul class="list-inline">        
+                                                            <li class="list-inline-item" ng-repeat="filename in category.children | filter:search" ng-if="filename.name.indexOf('original') !== -1">
+                                                                <img src="/{{icon.name}}/{{category.name}}/{{filename.name}}" height="42" width="42" ng-class="{'selected': category.selected,icon.selected}" ng-click="selectIcon(category,icon)"/>        
+                                                            </li>
+                                                        </ul>        
+                                                </ul>
+                                    </li>
+                                </ul>
+                        </div>
+                  <div class="col-sm-2 sidenav">
+                        <ul class="list-inline">
+                                <li ng-repeat="icon in detailicons.children" class="list-inline-item">
+                                        <p>
+                                        <!-- <a href="http://{{baseURL}}:{{port}}/icons{{fullpath}}/{{icon.name}}" target="_blank"> -->
+                                        <img src="{{fullpath}}/{{icon.name}}" style="border:solid 1px red" height="42" width="42" ng-class="{'selected': icon.selected}" ng-click="selectSVGVersion(icon)"/>        
+                                     
+                                        </p>
+                                </li>
+                                <p ng-if="selectedSVGVersionIcon != null">
+                                    <a href="http://{{baseURL}}:{{port}}/icons{{fullpath}}/{{selectedSVGVersionIcon}}" target="_blank">URL:http://{{baseURL}}:{{port}}/icons{{fullpath}}/{{selectedSVGVersionIcon}}</a>
+                                </p>
+                        </ul>
+                    
+                  </div>
+                  
+                </div>
+              </div>
+              
+  
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.3/angular.min.js" charset="utf-8"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    
+    <script charset="utf-8">
+      var app = angular.module("app", []);
+      app.controller('IconsCtrl',function($scope, $http) {
+
+        $http.get('/category').then(function(res) {
+          $scope.baseURL = window.location.hostname;
+          $scope.port = window.location.port;
+          $scope.icons = res.data;
+          $scope.categories = res.data.children;
+          
+        });
+
+        $scope.selectIcon = function(category,icon)
+        {
+            //send these both of the objects to the controller and find out the locat
+            $scope.selectedSVGVersionIcon = null;   
+            $scope.selectedcategoryname = category.name;
+            $scope.selectediconname = icon.name;
+                var url = '/category?categoryname='+$scope.selectedcategoryname+'&iconname='+  $scope.selectediconname;
+                $http.get(url).then(function(res) {
+                    $scope.detailicons = res.data;
+                    $scope.fullpath = res.data.path.split("icons")[1];
+                });
+        }
+
+        $scope.selectCategory = function(icon)
+        {
+            var url = '/category?categoryname='+icon.name;
+            $http.get(url).then(function(res) {
+                $scope.selectedCategory= icon;
+                $scope.icons= res.data;
+                });
+        }
+
+        $scope.selectSVGVersion = function(icon)
+        {
+            $scope.selectedSVGVersionIcon = icon.name;   
+            // $http.get(url).then(function(res) {
+            //     $scope.selectedCategory= icon;
+            //     $scope.icons= res.data;
+            //     });
+        }
+
+      });
+    </script>
+</body>
+</html>
