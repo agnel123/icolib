@@ -169,13 +169,13 @@
       var app = angular.module("app", []);
       app.controller('IconsCtrl',function($scope, $http) {
 
-        $http.get('/category').then(function(res) {
-          $scope.baseURL = window.location.hostname;
-          $scope.port = window.location.port;
-          $scope.icons = res.data;
-          $scope.categories = res.data.children;
+        // $http.get('/category').then(function(res) {
+        //   $scope.baseURL = window.location.hostname;
+        //   $scope.port = window.location.port;
+        //   $scope.icons = res.data;
+        //   $scope.categories = res.data.children;
           
-        });
+        // });
 
         $scope.selectIcon = function(category,icon)
         {
