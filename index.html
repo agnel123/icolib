@@ -5,15 +5,12 @@
 <!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
 
 <head>
+  
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <title>Devicon</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-
   <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.1/normalize.min.css" charset="utf-8">
-  <link rel="stylesheet" href="devicon.min.css" charset="utf-8">
-  <link rel="stylesheet" type="text/css" href="css/default.css" />
-  <link rel="stylesheet" type="text/css" href="css/component.css" />
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   <style media="screen">
     body {
@@ -80,13 +77,9 @@
         padding-left: 0;
         }
   </style>
-
 </head>
 
 <body ng-app="app" ng-controller="IconsCtrl">
-
-
-
         <nav class="navbar navbar-inverse">
                 <div class="container-fluid">
                   <div class="navbar-header">
@@ -169,13 +162,13 @@
       var app = angular.module("app", []);
       app.controller('IconsCtrl',function($scope, $http) {
 
-        // $http.get('/category').then(function(res) {
-        //   $scope.baseURL = window.location.hostname;
-        //   $scope.port = window.location.port;
-        //   $scope.icons = res.data;
-        //   $scope.categories = res.data.children;
+        $http.get('/category').then(function(res) {
+          $scope.baseURL = window.location.hostname;
+          $scope.port = window.location.port;
+          $scope.icons = res.data;
+          $scope.categories = res.data.children;
           
-        // });
+        });
 
         $scope.selectIcon = function(category,icon)
         {
@@ -202,10 +195,7 @@
         $scope.selectSVGVersion = function(icon)
         {
             $scope.selectedSVGVersionIcon = icon.name;   
-            // $http.get(url).then(function(res) {
-            //     $scope.selectedCategory= icon;
-            //     $scope.icons= res.data;
-            //     });
+        
         }
 
       });

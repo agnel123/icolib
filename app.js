@@ -4,21 +4,8 @@ var fs = require('fs');
 var path = require('path');
 var Svg = require('svgutils').Svg;
 const makeIcon  = require('./utils').makeIcon;
-
 app.use(express.static('icons'));
 const Filehound = require('filehound');
-
-// app.get('/list',function(req,res){
-// Filehound.create()
-//  .depth(1)
-//   .path("icons")
-//   .directory()
-//   .find((err, subdirectories) => {
-//     if (err) return console.error(err);
-//     res.json({subdirectories});
-//   });
-// });
-
 const dirTree = require('directory-tree');
 
 app.get('/category',function(req,res){ 
@@ -76,15 +63,6 @@ app.get('/icons/:categoryname/:iconname/:filename.svg',function(req,reply,next){
       });
     
  
-});
-
-app.get('/category1',function(req,res){
-    var dirTree = (path.resolve(__dirname)+'/icons');    
-diretoryTreeToObj(dirTree, function(err, res1){
-        if(err)
-            console.error(err);
-        res.json(res1);
-    });
 });
 
 var diretoryTreeToObj = function(dir, done) {
