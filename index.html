@@ -62,7 +62,7 @@
     footer {
       background-color: #555;
       color: white;
-      padding: 15px;
+      padding: 5px;
     }
     
     /* On small screens, set height to 'auto' for sidenav and grid */
@@ -107,6 +107,9 @@
                             </div>
                                 <div class="row" >
                                         <div  ng-repeat="icon in icons.children" ng-if="selectedCategory == null" class="col-md-4" style="display: inline-block">
+                                            <footer class="bg-sun-flower">
+                                                {{icon.name}}
+                                            </footer>
                                                   <div ng-repeat="category in icon.children|limitTo:3| filter:search" style="display: inline-block" > 
                                                     <div>
                                                       <div ng-repeat="filename in category.children|limitTo:3" ng-if="filename.name.indexOf('original') !== -1" style="display: inline-block;padding: 10px">
@@ -114,11 +117,12 @@
                                                       </div> 
                                                     </div>
                                                   </div>
-                                                <footer class="bg-sun-flower">
-                                                    <button type="button" class="btn btn-warning" ng-class="{'selected': icon.selected}" ng-click="selectCategory(icon)">More from: {{icon.name}}</button>
-                                                </footer>
-                                            </div>
+                                                  <button type="button" class="btn btn-warning btn-sm" ng-class="{'selected': icon.selected}" ng-click="selectCategory(icon)">More</button>
+                                          </div>
                                             <ul class="list-inline">
+                                                <footer class="bg-sun-flower">
+                                                    {{selectedCategory.name}}
+                                                    </footer>
                                             <li class="list-inline-item" ng-repeat="icon in icons.children" ng-if="selectedCategory != null" class="col-md-4" style="display: inline-block" ng-if="categroy">                                              
                                               <ul class="list-inline-item" div ng-repeat="category in icon.children | filter:search" style="display: inline-block" > 
                                                   <ul class="list-inline" ng-if="category.name.indexOf('original') !== -1">      
@@ -129,7 +133,6 @@
                                               </ul>
                                           </li>
                                         </ul>
-                                         
                               </div>
                         </div>
                       <div class="col-sm-2 sidenav">
@@ -152,11 +155,9 @@
                                             </div>
                                           </div>
                                           </font>
-                                        
                                       </div>
                             </ul>
                       </div>
-                  
                 </div>
               </div>
               
