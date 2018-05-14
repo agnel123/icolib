@@ -13,8 +13,9 @@
   <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.1/normalize.min.css" charset="utf-8">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   <style media="screen">
-    body {
-      margin: 5rem;
+
+  body {
+      /* margin: 5rem; */
       text-align: center;
       background: rgb(245, 245, 245);
     }
@@ -28,22 +29,22 @@
       z-index: -1;
     }
     .icon-version {
-      margin: 4rem 0;
+      /* margin: 4rem 0; */
     }
     i {
       display: inline-block;
-      margin: 2rem;
+      /* margin: 2rem; */
       font-size: 5rem;
     }
     img {
       max-width: 5rem;
     }
     h4 {
-      margin: 0;
+      /* margin: 0; */
       color: #60be86;
     }
     .navbar {
-      margin-bottom: 0;
+      /* margin-bottom: 0; */
       border-radius: 0;
     }
     
@@ -76,15 +77,20 @@
         list-style-position: inside;
         padding-left: 0;
         }
-     div.scrollmenu {
+   div.scrollmenu {
     background-color: #DCDCDC;
     overflow: auto;
     white-space: nowrap; 
 }
+
   </style>
 </head>
 
 <body ng-app="app" ng-controller="IconsCtrl">
+    <div class="container">
+        <h1 class="jumbotron-heading">Free Icons</h1>
+        <p class="lead text-muted">the only service which gives free icons for you </p>
+      </div>
               <div class="container-fluid text-center">    
                 <div class="row content">
                         <div class="col-sm-2 sidenav">
@@ -96,27 +102,34 @@
                             </ul>
                         </div>
                         <div class="col-sm-8 text-left"> 
-                            <div class="col-sm-12 text-center">
+                            <div class="col-sm-12 text-center" >
                                 <input type="text" id="search" placeholder="Search for icons in: {{selectedCategory.name}}" ng-model="search.name"  size="50">
                             </div>
-                                <div class="col-sm-12">
-                                        <ul class="list-inline">
-                                            <li class="list-inline-item" ng-repeat="icon in icons.children">
-                                                        <ul class="list-inline-item" ng-repeat="category in icon.children | filter:search">
-                                                                <ul class="list-inline" ng-if="category.name.indexOf('original') !== -1">      
-                                                                        <li>
-                                                                            <img src="/{{selectedCategory.name}}/{{icon.name}}/{{category.name}}" height="42" width="42" ng-class="{'selected': icon.selected}" ng-click="selectIcon(icon,selectedCategory)"/>        
-                                                                        </li>
-                                                                </ul>        
-
-                                                                <ul class="list-inline">        
-                                                                    <li class="list-inline-item" ng-repeat="filename in category.children" ng-if="filename.name.indexOf('original') !== -1">
-                                                                        <img src="/{{icon.name}}/{{category.name}}/{{filename.name}}" height="42" width="42" ng-class="{'selected': category.selected,icon.selected}" ng-click="selectIcon(category,icon)"/>        
-                                                                    </li>
-                                                                </ul>        
-                                                        </ul>
-                                            </li>
+                                <div class="row" >
+                                        <div  ng-repeat="icon in icons.children" ng-if="selectedCategory == null" class="col-md-4" style="display: inline-block">
+                                                  <div ng-repeat="category in icon.children|limitTo:3| filter:search" style="display: inline-block" > 
+                                                    <div>
+                                                      <div ng-repeat="filename in category.children|limitTo:3" ng-if="filename.name.indexOf('original') !== -1" style="display: inline-block;padding: 10px">
+                                                          <img src="/{{icon.name}}/{{category.name}}/{{filename.name}}" height="42" width="42" ng-class="{'selected': category.selected,icon.selected}" ng-click="selectIcon(category,icon)"/>        
+                                                      </div> 
+                                                    </div>
+                                                  </div>
+                                                <footer class="bg-sun-flower">
+                                                    <button type="button" class="btn btn-warning" ng-class="{'selected': icon.selected}" ng-click="selectCategory(icon)">More from: {{icon.name}}</button>
+                                                </footer>
+                                            </div>
+                                            <ul class="list-inline">
+                                            <li class="list-inline-item" ng-repeat="icon in icons.children" ng-if="selectedCategory != null" class="col-md-4" style="display: inline-block" ng-if="categroy">                                              
+                                              <ul class="list-inline-item" div ng-repeat="category in icon.children | filter:search" style="display: inline-block" > 
+                                                  <ul class="list-inline" ng-if="category.name.indexOf('original') !== -1">      
+                                                      <li>
+                                                          <img src="/{{selectedCategory.name}}/{{icon.name}}/{{category.name}}" height="42" width="42" ng-class="{'selected': icon.selected}" ng-click="selectIcon(icon,selectedCategory)"/>        
+                                                      </li>
+                                                  </ul>     
+                                              </ul>
+                                          </li>
                                         </ul>
+                                         
                               </div>
                         </div>
                       <div class="col-sm-2 sidenav">
@@ -142,13 +155,11 @@
                                         
                                       </div>
                             </ul>
-                        
                       </div>
                   
                 </div>
               </div>
               
-  
    <script src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.3/angular.min.js" charset="utf-8"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
